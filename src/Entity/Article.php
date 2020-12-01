@@ -28,7 +28,7 @@ class Article
     private $text;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
 
@@ -41,6 +41,16 @@ class Article
      * @ORM\Column(type="boolean")
      */
     private $isPublished;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $author;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $publishedBy;
 
     public function getId(): ?int
     {
@@ -103,6 +113,30 @@ class Article
     public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getPublishedBy(): ?string
+    {
+        return $this->publishedBy;
+    }
+
+    public function setPublishedBy(string $publishedBy): self
+    {
+        $this->publishedBy = $publishedBy;
 
         return $this;
     }
