@@ -34,6 +34,11 @@ class Organization
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Recruitment::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $recruitments;
+
     public function __toString(): string
     {
         return $this->name;
@@ -43,6 +48,7 @@ class Organization
     {
         $this->access = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->recruitments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,6 +116,36 @@ class Organization
             // set the owning side to null (unless already changed)
             if ($article->getPublishedBy() === $this) {
                 $article->setPublishedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recruitment[]
+     */
+    public function getRecruitments(): Collection
+    {
+        return $this->recruitments;
+    }
+
+    public function addRecruitment(Recruitment $recruitment): self
+    {
+        if (!$this->recruitments->contains($recruitment)) {
+            $this->recruitments[] = $recruitment;
+            $recruitment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecruitment(Recruitment $recruitment): self
+    {
+        if ($this->recruitments->removeElement($recruitment)) {
+            // set the owning side to null (unless already changed)
+            if ($recruitment->getAuthor() === $this) {
+                $recruitment->setAuthor(null);
             }
         }
 

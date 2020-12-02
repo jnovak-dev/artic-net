@@ -2,8 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Answer;
+use App\Entity\Application;
 use App\Entity\Article;
 use App\Entity\Organization;
+use App\Entity\Question;
+use App\Entity\Recruitment;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -33,5 +37,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Články', 'fas fa-newspaper', Article::class);
         yield MenuItem::linkToCrud('Organizace', 'fas fa-building', Organization::class);
         yield MenuItem::linkToCrud('Uživatelé', 'fas fa-user', User::class);
+
+        yield MenuItem::section('Srekrut', 'fas fa-user');
+        yield MenuItem::linkToCrud('Nábory', 'fas fa-user', Recruitment::class);
+        yield MenuItem::linkToCrud('Otázky', 'fas fa-user', Question::class);
+        yield MenuItem::linkToCrud('Odpovědi', 'fas fa-user', Answer::class);
+        yield MenuItem::linkToCrud('Přihlášky', 'fas fa-user', Application::class);
+
+        yield MenuItem::section('Smail', 'fas fa-user');
     }
 }
