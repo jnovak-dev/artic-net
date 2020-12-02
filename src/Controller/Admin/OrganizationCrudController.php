@@ -33,8 +33,8 @@ class OrganizationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name'),
-            AssociationField::new('access'),
+            TextField::new('name', 'Název'),
+            AssociationField::new('access', 'Přístup')->hideOnIndex(),
         ];
     }
 }

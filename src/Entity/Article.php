@@ -58,6 +58,7 @@ class Article
     public function __construct()
     {
         $this->author = new ArrayCollection();
+        $this->datePublished = new \DateTime();
     }
 
     public function getId(): ?int

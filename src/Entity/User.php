@@ -40,6 +40,11 @@ class User implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Application::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $applications;
+
     public function __toString(): string
     {
         return $this->username;
@@ -49,6 +54,7 @@ class User implements UserInterface
     {
         $this->organizations = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->applications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,6 +172,36 @@ class User implements UserInterface
     {
         if ($this->articles->removeElement($article)) {
             $article->removeAuthor($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Application[]
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
+    public function addApplication(Application $application): self
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications[] = $application;
+            $application->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApplication(Application $application): self
+    {
+        if ($this->applications->removeElement($application)) {
+            // set the owning side to null (unless already changed)
+            if ($application->getAuthor() === $this) {
+                $application->setAuthor(null);
+            }
         }
 
         return $this;

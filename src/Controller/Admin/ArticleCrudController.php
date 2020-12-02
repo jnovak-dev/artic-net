@@ -33,12 +33,12 @@ class ArticleCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('title'),
-            TextEditorField::new('text'),
+            TextField::new('title', 'Titulek'),
+            TextEditorField::new('text')->hideOnIndex(),
 //            SlugField::new('slug')->setTargetFieldName('slug'),
-            BooleanField::new('isPublished'),
-            AssociationField::new('author'),
-            AssociationField::new('publishedBy')
+            AssociationField::new('author', 'Autor')->hideOnIndex(),
+            AssociationField::new('publishedBy', 'Vydavatel'),
+            BooleanField::new('isPublished', 'Publikováno'),
         ];
     }
 }

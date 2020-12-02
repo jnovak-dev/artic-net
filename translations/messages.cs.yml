@@ -1,4 +1,6 @@
 current_lang: czech
 
-#EasyAdmin 3
+#Entities
 Article: Článek
+Organization: Organizace
+User: Uživatel
