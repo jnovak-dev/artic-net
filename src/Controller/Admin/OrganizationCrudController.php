@@ -2,29 +2,29 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Article;
+use App\Entity\Organization;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ArticleCrudController extends AbstractCrudController
+class OrganizationCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Article::class;
+        return Organization::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Crud::PAGE_INDEX, 'Články')
-            ->setPageTitle(Crud::PAGE_EDIT, 'Článek %entity_short_id%')
-            ->setPageTitle(Crud::PAGE_NEW, 'Nový článek')
-            ->setSearchFields(['id', 'title'])
+            ->setPageTitle(Crud::PAGE_INDEX, 'Organizace')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Organizace %entity_short_id%')
+            ->setPageTitle(Crud::PAGE_NEW, 'Nová organizace')
+            ->setSearchFields(['id', 'name'])
             ->setPaginatorPageSize(20)
             ->setDefaultSort(['id' => 'DESC']);
     }
@@ -33,12 +33,8 @@ class ArticleCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('title'),
-            TextEditorField::new('text'),
-//            SlugField::new('slug')->setTargetFieldName('slug'),
-            BooleanField::new('isPublished'),
-            AssociationField::new('author'),
-            AssociationField::new('publishedBy')
+            TextField::new('name'),
+            AssociationField::new('access'),
         ];
     }
 }

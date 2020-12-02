@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,14 +45,20 @@ class Article
     private $isPublished;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Organization::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $publishedBy;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="articles")
      */
     private $author;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $publishedBy;
+    public function __construct()
+    {
+        $this->author = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,26 +125,38 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    public function getPublishedBy(): ?string
+    public function getPublishedBy(): ?Organization
     {
         return $this->publishedBy;
     }
 
-    public function setPublishedBy(string $publishedBy): self
+    public function setPublishedBy(?Organization $publishedBy): self
     {
         $this->publishedBy = $publishedBy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getAuthor(): Collection
+    {
+        return $this->author;
+    }
+
+    public function addAuthor(User $author): self
+    {
+        if (!$this->author->contains($author)) {
+            $this->author[] = $author;
+        }
+
+        return $this;
+    }
+
+    public function removeAuthor(User $author): self
+    {
+        $this->author->removeElement($author);
 
         return $this;
     }
