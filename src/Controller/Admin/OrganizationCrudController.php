@@ -35,6 +35,7 @@ class OrganizationCrudController extends AbstractCrudController
         return [
             TextField::new('name', 'Název'),
             AssociationField::new('access', 'Přístup')->hideOnIndex(),
+//            ArrayField::new('access', 'Přístup')->onlyOnIndex(), todo: fix
         ];
     }
 }

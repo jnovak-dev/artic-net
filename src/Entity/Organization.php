@@ -39,6 +39,11 @@ class Organization
      */
     private $recruitments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EmailAddress::class, mappedBy="organization", orphanRemoval=true)
+     */
+    private $eemailAddresses;
+
     public function __toString(): string
     {
         return $this->name;
@@ -49,6 +54,7 @@ class Organization
         $this->access = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->recruitments = new ArrayCollection();
+        $this->eemailAddresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +152,36 @@ class Organization
             // set the owning side to null (unless already changed)
             if ($recruitment->getAuthor() === $this) {
                 $recruitment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmailAddress[]
+     */
+    public function getEemailAddresses(): Collection
+    {
+        return $this->eemailAddresses;
+    }
+
+    public function addEemailAddress(EmailAddress $eemailAddress): self
+    {
+        if (!$this->eemailAddresses->contains($eemailAddress)) {
+            $this->eemailAddresses[] = $eemailAddress;
+            $eemailAddress->setOrganization($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEemailAddress(EmailAddress $eemailAddress): self
+    {
+        if ($this->eemailAddresses->removeElement($eemailAddress)) {
+            // set the owning side to null (unless already changed)
+            if ($eemailAddress->getOrganization() === $this) {
+                $eemailAddress->setOrganization(null);
             }
         }
 

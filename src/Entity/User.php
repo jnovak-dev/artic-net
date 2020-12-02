@@ -45,6 +45,11 @@ class User implements UserInterface
      */
     private $applications;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=EmailAddress::class, mappedBy="access")
+     */
+    private $emailAddresses;
+
     public function __toString(): string
     {
         return $this->username;
@@ -55,6 +60,7 @@ class User implements UserInterface
         $this->organizations = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->applications = new ArrayCollection();
+        $this->emailAddresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -202,6 +208,33 @@ class User implements UserInterface
             if ($application->getAuthor() === $this) {
                 $application->setAuthor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmailAddress[]
+     */
+    public function getEmailAddresses(): Collection
+    {
+        return $this->emailAddresses;
+    }
+
+    public function addEmailAddress(EmailAddress $emailAddress): self
+    {
+        if (!$this->emailAddresses->contains($emailAddress)) {
+            $this->emailAddresses[] = $emailAddress;
+            $emailAddress->addAccess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmailAddress(EmailAddress $emailAddress): self
+    {
+        if ($this->emailAddresses->removeElement($emailAddress)) {
+            $emailAddress->removeAccess($this);
         }
 
         return $this;

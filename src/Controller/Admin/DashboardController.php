@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Answer;
 use App\Entity\Application;
 use App\Entity\Article;
+use App\Entity\EmailAddress;
+use App\Entity\EmailMessage;
 use App\Entity\Organization;
 use App\Entity\Question;
 use App\Entity\Recruitment;
@@ -45,5 +47,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Přihlášky', 'fas fa-user', Application::class);
 
         yield MenuItem::section('Smail', 'fas fa-user');
+        yield MenuItem::linkToCrud('Adresy', 'fas fa-user', EmailAddress::class);
+        yield MenuItem::linkToCrud('Zprávy', 'fas fa-user', EmailMessage::class);
     }
 }
