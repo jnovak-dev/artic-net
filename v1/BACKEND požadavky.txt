@@ -1,0 +1,12 @@
+Odchytávání sprostých slov.
+Vypisování hodnocení uživatelů.
+Možnost přidávání hodnocení před formulář.
+Možnost přidávání článku.
+Při kliknutí na článek, zobrazí článek.
+amazing routing !
+Možnost zprovoznění formuláře na žádost o práci
+
+SELECT ... FROM DATABASE WHERE isdelete=0 ORDER BY ID DESC LIMIT 3;
+
+
+Chci po tobě mnohem více věcí, ale tohle je základ !
