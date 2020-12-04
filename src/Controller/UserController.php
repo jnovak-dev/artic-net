@@ -8,16 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends AbstractController
+class UserController extends BaseController
 {
-    //todo: udělat to na BaseController
-    private $session;
-
-    public function __construct(SessionInterface $session)
-    {
-        $this->session = $session;
-    }
-
     /**
      * @Route("/chars", name="user")
      */
@@ -39,8 +31,9 @@ class UserController extends AbstractController
         if(!$user)
             throw $this->createNotFoundException();
 
+//        $this->session->clear();
         $this->session->set('user:id', $user->getId());
-        $this->session->set('user:name', $user);
+        $this->session->set('user:name', $user->getUsername());
 
         return $this->redirectToRoute('user');
     }

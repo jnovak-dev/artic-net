@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\EmailAddress;
+use Doctrine\ORM\Query\Expr\Base;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -11,15 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/smail.ic")
  */
-class EmailController extends AbstractController
+class EmailController extends BaseController
 {
-    private $session;
-
-    public function __construct(SessionInterface $session)
-    {
-        $this->session = $session;
-    }
-
     /**
      * @Route("/", name="smail_index")
      */
